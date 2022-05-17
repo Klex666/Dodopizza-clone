@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+
+import Header from './components/Header';
+import Category from './components/Category';
+import Pizza from './components/Pizza';
 
 function App() {
+  const [pizzas, setPizzas] = useState([]);
+
+  useEffect(() => {
+    fetch('https://62487b92831c69c687c4c28f.mockapi.io/pizzas')
+      .then((res) => {
+        return res.json();
+      })
+      .then((arr) => {
+        setPizzas(arr);
+      });
+  });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Category />
+      <div className="flex flex-wrap w-[1200px] h-full bg-gray mx-auto mt-[44px] mb-10 rounded-[40px] p-10">
+        {pizzas.map((obj) => {
+          <Pizza key={obj.id} pizzas={obj} />;
+        })}
+      </div>
     </div>
   );
 }
