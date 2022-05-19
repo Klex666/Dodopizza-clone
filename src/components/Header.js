@@ -1,10 +1,15 @@
 import { Link } from 'react-router-dom';
 
-const Header = ({ searchValue, setSearchValue }) => {
+const Header = ({ searchValue, setSearchValue, scroll }) => {
   return (
     <div className="w-[1300px] h-[200px] mx-auto mt-6 sticky top-0">
       {/* Logo dodopizza */}
-      <div className="flex w-[300px] h-[175px] bg-white rounded-[40px] flex-wrap float-left">
+      <div
+        className={
+          scroll
+            ? 'w-[300px] h-[175px] bg-white rounded-[40px] flex-wrap float-left hidden'
+            : 'flex w-[300px] h-[175px] bg-white rounded-[40px] flex-wrap float-left'
+        }>
         <a href="!#">
           <img src="/header/dodoBLACK.png" alt="Logo" width={170} height={170} className="flex" />
         </a>
@@ -14,7 +19,12 @@ const Header = ({ searchValue, setSearchValue }) => {
         </div>
       </div>
       {/* Navigation */}
-      <div className="w-[950px] h-[120px] bg-white rounded-[40px] float-right mt-7">
+      <div
+        className={
+          scroll
+            ? 'w-[1300px] h-[120px] bg-white rounded-[40px]'
+            : 'w-[950px] h-[120px] bg-white rounded-[40px] float-right mt-7'
+        }>
         <div className="float-left w-[400px] h-[70px] bg-black rounded-[25px] mt-7 ml-[83px] mr-0">
           <img
             src="/header/search-icon.png"

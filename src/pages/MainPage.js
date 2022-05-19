@@ -9,7 +9,9 @@ const MainPage = () => {
   const [pizzas, setPizzas] = useState([]);
   const [categoryId, setCategoryId] = useState(0);
   const [searchValue, setSearchValue] = useState('');
+  const [scroll, setScroll] = useState(false);
 
+  // Получение данных
   useEffect(() => {
     async function fetchData() {
       const res = await axios.get(
@@ -22,9 +24,16 @@ const MainPage = () => {
     fetchData();
   }, [categoryId, searchValue]);
 
+  // Отслеживание скролла для header
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', () => setScroll(window.pageYOffset > 100));
+    }
+  }, []);
+
   return (
     <div className="App">
-      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
+      <Header searchValue={searchValue} setSearchValue={setSearchValue} scroll={scroll} />
       <Category categoryId={categoryId} onClickCategory={(id) => setCategoryId(id)} />
       <div className="flex flex-wrap w-[1200px] h-max bg-gray mx-auto mt-[44px] mb-10 rounded-[40px] p-10 min-h-[1000px]">
         {pizzas
