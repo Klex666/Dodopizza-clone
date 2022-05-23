@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-const Header = ({ searchValue, setSearchValue, scroll }) => {
+import { setSearchValue } from '../redux/slices/searchSlice';
+
+const Header = ({ scroll }) => {
+  const searchValue = useSelector((state) => state.searchReducer.searchValue);
+  const items = useSelector((state) => state.cartReducer.items);
+
+  const dispatch = useDispatch();
+
   return (
-    <div className="w-[1300px] h-[200px] mx-auto mt-6 sticky top-0">
+    <div className="w-[1300px] h-[200px] mx-auto mt-6 sticky top-0 z-10">
       {/* Logo dodopizza */}
       <div
         className={
@@ -10,7 +18,7 @@ const Header = ({ searchValue, setSearchValue, scroll }) => {
             ? 'w-[300px] h-[175px] bg-white rounded-[40px] flex-wrap float-left hidden'
             : 'flex w-[300px] h-[175px] bg-white rounded-[40px] flex-wrap float-left'
         }>
-        <a href="!#">
+        <a href="/">
           <img src="/header/dodoBLACK.png" alt="Logo" width={170} height={170} className="flex" />
         </a>
         <div className="mt-8">
@@ -35,15 +43,19 @@ const Header = ({ searchValue, setSearchValue, scroll }) => {
           />
           <input
             value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
+            onChange={(event) => dispatch(setSearchValue(event.target.value))}
             type="text"
             placeholder="Поиск..."
             className="flex float-right mt-3 mr-2 text-[20px] w-[340px] h-[50px] bg-black text-white"
           />
         </div>
         {/* Cart */}
-        <button className="h-[60px] w-[170px] flex float-right bg-black mr-[39px] mt-[30px] rounded-[30px] text-white pt-2.5 pl-8 text-[25px]">
-          <Link to="cart">Корзина</Link>
+        <button className="h-[60px] flex float-right bg-black mr-[39px] mt-[30px] rounded-[30px] text-white pt-3 pl-6 pr-6 text-[25px] font-['Nunito'] font-semibold">
+          {items.length > 0 ? (
+            <Link to="cart">Корзина | {items.length}</Link>
+          ) : (
+            <Link to="cart">Корзина</Link>
+          )}
         </button>
       </div>
     </div>

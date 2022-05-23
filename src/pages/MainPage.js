@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import Header from '../components/Header';
 import Category from '../components/Category';
 import Pizza from '../components/Pizza';
 
+import { setCategoryId } from '../redux/slices/categorySlice';
+
 const MainPage = () => {
+  const categoryId = useSelector((state) => state.categoryReducer.categoryId);
+  const searchValue = useSelector((state) => state.searchReducer.searchValue);
+  const dispatch = useDispatch();
+
   const [pizzas, setPizzas] = useState([]);
-  const [categoryId, setCategoryId] = useState(0);
-  const [searchValue, setSearchValue] = useState('');
   const [scroll, setScroll] = useState(false);
 
   // Получение данных
@@ -33,8 +38,8 @@ const MainPage = () => {
 
   return (
     <div className="App">
-      <Header searchValue={searchValue} setSearchValue={setSearchValue} scroll={scroll} />
-      <Category categoryId={categoryId} onClickCategory={(id) => setCategoryId(id)} />
+      <Header scroll={scroll} />
+      <Category categoryId={categoryId} onClickCategory={(id) => dispatch(setCategoryId(id))} />
       <div className="flex flex-wrap w-[1200px] h-max bg-gray mx-auto mt-[44px] mb-10 rounded-[40px] p-10 min-h-[1000px]">
         {pizzas
           .filter((obj) => {
@@ -44,7 +49,7 @@ const MainPage = () => {
             return false;
           })
           .map((obj) => (
-            <Pizza key={obj.id} pizzas={obj} />
+            <Pizza key={obj.id} {...obj} />
           ))}
       </div>
     </div>
