@@ -7,27 +7,29 @@ import Category from '../components/Category';
 import Pizza from '../components/Pizza';
 
 import { setCategoryId } from '../redux/slices/categorySlice';
+import { setPizzas } from '../redux/slices/pizzaSlice';
 
 const MainPage = () => {
   const categoryId = useSelector((state) => state.categoryReducer.categoryId);
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
+  const pizzas = useSelector((state) => state.pizzaReducer.pizzas);
+
   const dispatch = useDispatch();
 
-  const [pizzas, setPizzas] = useState([]);
   const [scroll, setScroll] = useState(false);
 
   // Получение данных
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get(
+      const { data } = await axios.get(
         `https://62487b92831c69c687c4c28f.mockapi.io/pizzas?${
           categoryId > 0 ? `category=${categoryId}` : ''
         }`,
       );
-      setPizzas(res.data);
+      dispatch(setPizzas(data));
     }
     fetchData();
-  }, [categoryId, searchValue]);
+  }, [categoryId, searchValue, dispatch]);
 
   // Отслеживание скролла для header
   useEffect(() => {
