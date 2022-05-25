@@ -1,9 +1,13 @@
-const Category = ({ categoryId, onClickCategory }) => {
+import { useSelector } from 'react-redux';
+
+const Category = ({ onClickCategory }) => {
   // Все - 0, Мясные - 1, Острые - 2, Сладкие - 3, Овощные - 4, Сырные - 5, Грибные - 6
   const categories = ['Все', 'Мясные', 'Острые', 'Сладкие', 'Овощные', 'Сырные', 'Грибные'];
 
+  const categoryId = useSelector((state) => state.categoryReducer.categoryId);
+
   return (
-    <div className="w-[1200px] h-[515px] bg-gray mx-auto rounded-[40px] ">
+    <div className="w-[1200px] h-[515px] bg-gray mx-auto rounded-[40px] mt-24">
       <div className="">
         <h1 className="ml-14 pt-4 text-[30px] text-gray-light font-['Nunito'] font-bold">
           Часто заказывают

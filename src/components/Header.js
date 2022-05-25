@@ -3,14 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setSearchValue } from '../redux/slices/searchSlice';
 
-const Header = ({ scroll }) => {
+const Header = () => {
   const searchValue = useSelector((state) => state.searchReducer.searchValue);
   const items = useSelector((state) => state.cartReducer.items);
+  const scroll = useSelector((state) => state.scrollReducer.scroll);
 
   const dispatch = useDispatch();
 
   return (
-    <div className="w-[1300px] h-[200px] mx-auto mt-6 sticky top-0 z-10">
+    <div className="w-[1300px] h-[100px] mx-auto mt-6 sticky top-0 z-10">
       {/* Logo dodopizza */}
       <div
         className={
@@ -30,10 +31,10 @@ const Header = ({ scroll }) => {
       <div
         className={
           scroll
-            ? 'w-[1300px] h-[120px] bg-white rounded-[40px]'
-            : 'w-[950px] h-[120px] bg-white rounded-[40px] float-right mt-7'
+            ? 'w-[1300px] h-[80px] bg-white rounded-[40px] pt-1.5'
+            : 'w-[950px] h-[120px] bg-white rounded-[40px] float-right mt-7 pt-7'
         }>
-        <div className="float-left w-[400px] h-[70px] bg-black rounded-[25px] mt-7 ml-[83px] mr-0">
+        <div className="float-left w-[400px] h-[70px] bg-black rounded-[25px] ml-[83px]">
           <img
             src="/header/search-icon.png"
             alt="Search-icon"
@@ -50,7 +51,7 @@ const Header = ({ scroll }) => {
           />
         </div>
         {/* Cart */}
-        <button className="h-[60px] flex float-right bg-black mr-[39px] mt-[30px] rounded-[30px] text-white pt-3 pl-6 pr-6 text-[25px] font-['Nunito'] font-semibold">
+        <button className="h-[60px] flex float-right bg-black mr-[39px] rounded-[30px] text-white pt-3 pl-6 pr-6 text-[25px] font-['Nunito'] font-semibold">
           {items.length > 0 ? (
             <Link to="cart">Корзина | {items.length}</Link>
           ) : (
