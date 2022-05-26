@@ -14,6 +14,6 @@ export const scrollSlice = createSlice({
   },
 });
 
-export const { setScroll } = scrollSlice.actions;
+export const scrollActions = scrollSlice.actions;
 
 export default scrollSlice.reducer;

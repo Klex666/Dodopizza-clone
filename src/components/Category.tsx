@@ -1,10 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
-const Category = ({ onClickCategory }) => {
+interface ICategoryProps {
+  onClickCategory: (id: number) => void;
+}
+
+const Category: React.FC<ICategoryProps> = ({ onClickCategory }) => {
   // Все - 0, Мясные - 1, Острые - 2, Сладкие - 3, Овощные - 4, Сырные - 5, Грибные - 6
   const categories = ['Все', 'Мясные', 'Острые', 'Сладкие', 'Овощные', 'Сырные', 'Грибные'];
 
-  const categoryId = useSelector((state) => state.categoryReducer.categoryId);
+  const { categoryId } = useTypedSelector((state) => state.categoryReducer);
 
   return (
     <div className="w-[1200px] h-[515px] bg-gray mx-auto rounded-[40px] mt-24">

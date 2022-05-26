@@ -1,6 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { IPizza } from '../api/pizzaApiTypes';
+import { ICartSlice } from './types/cartSliceTypes';
 
-const initialState = {
+const initialState: ICartSlice = {
   items: [],
   totalPrice: 0,
 };
@@ -9,7 +11,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addPizza(state, action) {
+    addPizza(state, action: PayloadAction<IPizza>) {
       state.items.push(action.payload);
       state.totalPrice = state.items.reduce((sum, obj) => {
         return obj.price + sum;
@@ -24,6 +26,6 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addPizza, removePizza, clearCart } = cartSlice.actions;
+export const cartActions = cartSlice.actions;
 
 export default cartSlice.reducer;

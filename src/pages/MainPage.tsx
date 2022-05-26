@@ -1,36 +1,35 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import Header from '../components/Header';
 import Category from '../components/Category';
 import Pizza from '../components/Pizza';
 
 import { useGetPizzasByCategoryQuery } from '../redux/api/pizzaApi';
-import { setCategoryId } from '../redux/slices/categorySlice';
-import { setScroll } from '../redux/slices/scrollSlice';
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
-const MainPage = () => {
-  const dispatch = useDispatch();
+const MainPage: React.FC = () => {
+  const { setCategoryId, setScroll } = useActions();
 
-  const categoryId = useSelector((state) => state.categoryReducer.categoryId);
-  const searchValue = useSelector((state) => state.searchReducer.searchValue);
+  const { categoryId } = useTypedSelector((state) => state.categoryReducer);
+  const { searchValue } = useTypedSelector((state) => state.searchReducer);
 
   const { data, isLoading } = useGetPizzasByCategoryQuery(categoryId);
 
   // Отслеживание скролла для header
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', () => dispatch(setScroll(window.pageYOffset > 100)));
+      window.addEventListener('scroll', () => setScroll(window.pageYOffset > 100));
     }
-  }, [dispatch]);
+  }, [setScroll]);
 
   return (
     <div className="App">
       <Header />
-      <Category onClickCategory={(id) => dispatch(setCategoryId(id))} />
+      <Category onClickCategory={(id: number) => setCategoryId(id)} />
       <div className="flex flex-wrap w-[1200px] h-max bg-gray mx-auto mt-[44px] mb-10 rounded-[40px] p-10 min-h-[1000px]">
         {isLoading
-          ? []
+          ? 'Загрузка'
           : data
               .filter((obj) => {
                 if (obj.title.toLowerCase().includes(searchValue.toLowerCase())) {

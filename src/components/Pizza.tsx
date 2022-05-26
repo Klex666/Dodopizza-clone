@@ -1,9 +1,8 @@
-import { useDispatch } from 'react-redux';
+import { useActions } from '../hooks/useActions';
+import { IPizza } from '../redux/api/pizzaApiTypes';
 
-import { addPizza } from '../redux/slices/cartSlice';
-
-const Pizza = ({ id, title, image, description, price }) => {
-  const dispatch = useDispatch();
+const Pizza: React.FC<IPizza> = ({ id, title, image, description, price }) => {
+  const { addPizza } = useActions();
 
   const item = {
     id,
@@ -28,7 +27,7 @@ const Pizza = ({ id, title, image, description, price }) => {
             от {price}₽
           </div>
           <button
-            onClick={() => dispatch(addPizza(item))}
+            onClick={() => addPizza(item)}
             className="w-[120px] h-[40px] flex ml-20 bg-white rounded-full float-right items-center pl-[25px] text-orange-black font-bold font-['Nunito']">
             Выбрать
           </button>

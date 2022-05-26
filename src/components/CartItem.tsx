@@ -1,10 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
 
-import { removePizza } from '../redux/slices/cartSlice';
+import { useActions } from '../hooks/useActions';
+import { IPizza } from '../redux/api/pizzaApiTypes';
 
-const CartItem = ({ id, title, image, price }) => {
-  const dispatch = useDispatch();
+const CartItem: React.FC<IPizza> = ({ id, title, image, price }) => {
+  const { removePizza } = useActions();
 
   return (
     <>
@@ -23,7 +23,7 @@ const CartItem = ({ id, title, image, price }) => {
         height={45}
         width={50}
         className="mt-32 ml-4 hover:scale-[1.1] duration-200 cursor-pointer"
-        onClick={() => dispatch(removePizza(id))}
+        onClick={() => removePizza(id)}
       />
     </>
   );

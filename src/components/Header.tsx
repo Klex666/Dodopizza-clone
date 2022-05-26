@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { setSearchValue } from '../redux/slices/searchSlice';
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
 const Header = () => {
-  const searchValue = useSelector((state) => state.searchReducer.searchValue);
-  const items = useSelector((state) => state.cartReducer.items);
-  const scroll = useSelector((state) => state.scrollReducer.scroll);
+  const { setSearchValue } = useActions();
 
-  const dispatch = useDispatch();
+  const { searchValue } = useTypedSelector((state) => state.searchReducer);
+  const { items } = useTypedSelector((state) => state.cartReducer);
+  const { scroll } = useTypedSelector((state) => state.scrollReducer);
 
   return (
     <div className="w-[1300px] h-[100px] mx-auto mt-6 sticky top-0 z-10">
@@ -44,7 +44,7 @@ const Header = () => {
           />
           <input
             value={searchValue}
-            onChange={(event) => dispatch(setSearchValue(event.target.value))}
+            onChange={(event) => setSearchValue(event.target.value)}
             type="text"
             placeholder="Поиск..."
             className="flex float-right mt-3 mr-2 text-[20px] w-[340px] h-[50px] bg-black text-white"

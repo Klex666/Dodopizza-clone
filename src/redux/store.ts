@@ -19,3 +19,5 @@ export const store = configureStore({
 });
 
 setupListeners(store.dispatch);
+
+export type TypeRootState = ReturnType<typeof store.getState>;

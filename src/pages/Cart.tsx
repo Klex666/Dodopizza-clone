@@ -1,15 +1,15 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
 import CartItem from '../components/CartItem';
-import { clearCart } from '../redux/slices/cartSlice';
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypedSelector';
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const items = useSelector((state) => state.cartReducer.items);
-  const totalPrice = useSelector((state) => state.cartReducer.totalPrice);
+
+  const { clearCart } = useActions();
+  const { items, totalPrice } = useTypedSelector((state) => state.cartReducer);
 
   return (
     <div className="w-[1300px] h-full min-h-[840px] bg-white mx-auto mt-[60px] pb-[10px] rounded-[40px]">
@@ -21,7 +21,7 @@ const Cart = () => {
           <h1 className="font-['Nunito'] font-black text-[50px]">Корзина</h1>
           <div
             className="font-['Nunito'] font-extralight text-[20px] ml-[10px] mt-7 hover:scale-[1.03] duration-200 cursor-pointer"
-            onClick={() => dispatch(clearCart())}>
+            onClick={() => clearCart()}>
             Очистить корзину
           </div>
           {items.map((item) => (
