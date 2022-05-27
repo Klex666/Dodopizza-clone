@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
 
 import categoryReducer from './slices/categorySlice';
 import cartReducer from './slices/cartSlice';
@@ -17,7 +16,5 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(pizzaApi.middleware),
 });
-
-setupListeners(store.dispatch);
 
 export type TypeRootState = ReturnType<typeof store.getState>;
